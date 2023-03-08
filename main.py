@@ -44,14 +44,11 @@ for filename in os.listdir(sys.argv[1]):
     file = open(path, "r", encoding="utf8")
     fout = open(outPath, "w", encoding="utf8")
 
-    readChar = "ass"
     transcribe = False
     escape = False
     escaped = False
     
-    while readChar != "":
-        readChar = file.read(1)
-        
+    while readChar := file.read(1):
         #escape handling
         if transcribe and escape:
             if readChar == "p":
