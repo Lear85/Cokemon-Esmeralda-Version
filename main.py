@@ -7,17 +7,11 @@ if not os.path.exists("./pokeemerald"):
     print("Ya done lost the whole-ass game!")
     exit("oop")
 
-if not os.path.exists("./output/"):
-    os.makedirs("./output/")
+os.makedirs("output", exist_ok=True)
 
 if len(sys.argv) < 2:
     print("Eyyo you need to specify the file to extract from!")
     exit("whoops!")
-
-
-def setOutput(toOut):
-    toOut = "./output" + sys.argv[1][1:] + "/" + toOut
-    return toOut
 
 """
 for i in range(len(sys.argv)):
@@ -38,16 +32,17 @@ if not directoryMode:
     fout = open(outName,"w")
 """
 
-dir = os.listdir(sys.argv[1])
+for filename in os.listdir(sys.argv[1]):
+    path = os.path.join(sys.argv[1], filename)
+    if not os.path.isfile(path):
+        print("This shit is not a file, fuck you: " + path)
+        continue
+    outPath = os.path.join("output", path)
+    outDir = os.path.dirname(outPath)
+    os.makedirs(outDir, exist_ok=True)
 
-if not os.path.exists("./output" + sys.argv[1]):
-    os.makedirs("./output" + sys.argv[1])
-
-for i in range(len(dir)):
-    file = open("."+sys.argv[1][1:]+"/"+dir[i],"r",encoding='utf8')
-    outName = setOutput(dir[i])
-    print(outName)
-    fout = open(outName,"w",encoding='utf8')
+    file = open(path, "r", encoding="utf8")
+    fout = open(outPath, "w", encoding="utf8")
 
     readChar = "ass"
     transcribe = False
